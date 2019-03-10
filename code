@@ -1,0 +1,109 @@
+import numpy as np
+import csv
+import os # for dealing with working directory
+import random # for randomly selecting a file
+import re # for splitting data
+import matplotlib.pyplot as plt
+
+os.chdir('/Users/paul/Desktop/')
+#files_list92 = os.listdir()
+#year_2017 = 'MR16-09Leg3_recal_post_pco2_cal_v511.csv'
+year_1992 = 'p17e_hy1.csv'
+
+with open(year_1992)as csv_file:
+    csv_reader = csv.reader(csv_file)
+    row_list = [row for row in csv_reader]
+    for row in row_list:
+            if len(row) == 1:
+                row_split = re.split('[:=]',row[0])
+                row_split = [string.strip() for string in row_split]
+    
+    
+    wanted_column = 10 #Longitude
+    plot_list = row_list[8:]
+    its90_list1 = [float(row[wanted_column].strip()) for row in plot_list if len(row) >= 3]
+    #print(len(its90_list1))
+    
+    wanted_column = 14 #Salinity
+    plot_list = row_list[8:]
+    its90_list2 = [float(row[wanted_column].strip()) for row in plot_list if len(row) >= 3]
+    #print(len(its90_list2))
+    
+    wanted_column = 9 #Latitude
+    plot_list = row_list[8:]
+    its90_list3 = [float(row[wanted_column].strip()) for row in plot_list if len(row) >= 3]
+    #print(len(its90_list3))
+    
+    print("hi")
+    
+    list3_wSal = []
+    list2_wSal = []
+    
+    for index, longitude_val in enumerate(its90_list1):
+        if -126.8 < longitude_val and longitude_val < -125.2:
+            #print(its90_list3[index], end='')
+           # print(" " + str(its90_list2[index]))
+           # print(index)
+            
+            
+            list3_wSal.append(its90_list3[index])
+            list2_wSal.append(its90_list2[index])
+            
+            
+            import matplotlib.pyplot as plt
+            X = list3_wSal
+            Y = list2_wSal
+            
+            plt.plot(X,Y)
+            plt.xlabel('Lattitude')
+            plt.ylabel('Salinity')
+            
+            
+    print(sum(list2_wSal)/len(list2_wSal))
+    
+    
+    os.chdir('/Users/paul/Desktop/')
+#files_list92 = os.listdir()
+year_2017 = '49NZ20170208.exc.csv'
+
+with open(year_2017)as csv_file:
+    csv_reader = csv.reader(csv_file)
+    row_list = [row for row in csv_reader]
+    for row in row_list:
+            if len(row) == 1:
+                row_split = re.split('[:=]',row[0])
+                row_split = [string.strip() for string in row_split]
+    
+  
+    
+    wanted_column = 16 #Salinity
+    plot_list = row_list[56:]
+    its90_list4 = [float(row[wanted_column].strip()) for row in plot_list if len(row) >= 3]
+    #print(its90_list4)
+    
+    wanted_column = 9 #Latitude
+    plot_list = row_list[56:]
+    its90_list5 = [float(row[wanted_column].strip()) for row in plot_list if len(row) >= 3]
+    #print(its90_list5)
+    
+    list4_wSal = []
+    list5_wSal = []
+    
+    for index, salinity_val in enumerate(its90_list4):
+        if 1 < salinity_val :
+            #print(its90_list4[index], end='')
+            #print(" " + str(its90_list5[index]))
+            #print(index)
+            
+            list4_wSal.append(its90_list4[index])
+            list5_wSal.append(its90_list5[index])
+            
+        
+            X = list4_wSal
+            Y = list5_wSal
+            plt.plot(Y,X)
+            plt.xlabel('Lattitude')
+            plt.ylabel('Salinity')
+            
+    print(sum(list4_wSal)/len(list4_wSal))
+    
